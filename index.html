@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>tic-tac-toe</title>
+	<link rel="stylesheet" href="style.css">
+	<script src="http://d3js.org/d3.v3.min.js"> </script>
+
+</head>
+<body>
+	<div class="name-game">Крестики - нолики</div>
+	<div class="game-win"></div>
+	<script>
+
+		var game = d3.select("body").append("svg").attr("width", 400).attr("height", 400);
+
+		var locationGameX = 100;
+		var locationGameY = 30;
+		var color = ['red', 'blue'];
+		var n = 0;
+		var matrix = [
+			[0, 0, 0],
+			[0, 0, 0],
+			[0, 0, 0]
+		];
+		var sumWin = 0;
+		var sumWinVertical = 0;
+		var sumDiagonalOne;
+		var sumDiagonalTwo;
+		var winGame = document.getElementsByTagName("div")[1];
+		var endGame = 0;
+
+		for (let i = 0; i < 3; i++) {
+			for (let j = 0; j < 3; j++) {
+				var box = game.append("rect").attr("x", locationGameX + 80 * i).attr("y", locationGameY + 80 * j).attr("width", 78).attr("height", 78).attr("fill", "yellow");
+
+				box.on('click', () => {
+				
+					if (endGame == 0) {				
+						game.append('circle').attr('cx', locationGameX + 80 * i + 39).attr('cy', locationGameY + 80 * j + 39).attr('r',20).attr('fill', color[(n % 2)]);		
+
+						n % 2 == 0 ? matrix[j][i] = 1 : matrix[j][i] = 7;
+
+
+						if (n > 3) {
+							for (let k = 0; k < 3; k++) {
+								for (let m = 0; m < 3; m++) {
+									sumWin += matrix[k][m]; 
+									sumWinVertical += matrix[m][k];
+								}
+								sumDiagonalOne = matrix[0][0] + matrix[1][1] + matrix[2][2];
+								sumDiagonalTwo = matrix[2][0] + matrix[1][1] + matrix[0][2];
+
+								if (sumWin == 3 || sumWinVertical == 3 || sumDiagonalOne == 3 || sumDiagonalTwo == 3) {
+									winGame.innerHTML = 'Победа красных!';
+									endGame = 1;
+									break;
+								} else if (sumWin == 21 || sumWinVertical == 21 || sumDiagonalOne == 21 || sumDiagonalTwo == 21) {
+									winGame.innerHTML = 'Победа синих!';
+									endGame = 1;
+									break;
+								} else if (n == 8) {
+									winGame.innerHTML = 'Видимо, ничья';
+								} else {
+									sumWinVertical = 0;
+									sumWin = 0;
+								}
+							}   
+						} 
+						n++;
+					}
+				});
+			}
+		}
+
+	</script>
+
+</body>
+</html>
+
+		

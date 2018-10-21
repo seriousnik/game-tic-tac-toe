@@ -1,0 +1,15 @@
+body {
+	background-color: #2F4F4F;
+	text-align: center;
+}
+
+.name-game {
+	font-size: 50px; 
+	color: white; 
+	font-family: Comic Sans MS;
+}
+
+.game-win {
+	font-size: 50px; 
+	color: white; 
+}
